@@ -1,4 +1,4 @@
-program puzzle8UAS;
+program puzzle8game;
 uses
 	CRT,PuzzleEngine; //CRT for modifying screen, and PuzzleEngine is the core module
 

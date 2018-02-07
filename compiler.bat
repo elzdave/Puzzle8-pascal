@@ -5,7 +5,7 @@ goto Compiler
 
 :Compiler
   set runGame=N
-  fpc puzzle8uas.pas
+  fpc puzzle8game.pas
   echo Compiled successfully!
   set /p runGame=Run the game? (Y/[N]) : 
   if /I "%runGame%"=="y" (
