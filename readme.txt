@@ -1,0 +1,1 @@
+Jika sudah install Free Pascal, langsung buka compiler.bat, sebaliknya install Free Pascal dahulu.

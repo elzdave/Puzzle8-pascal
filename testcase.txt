@@ -1,0 +1,49 @@
+Contoh testcase
+Game 8-Puzzle
+
+**Initial State**
+
+5-step (TESTED)
+  2 k 3
+  1 5 6
+  4 7 8
+Posisi ditemukan pada array
+DFS : 17
+BFS : 39
+
+10-step (TESTED)
+  2 3 6
+  1 5 8
+  k 4 7
+Posisi ditemukan pada array
+DFS : 121
+BFS : 463
+
+15-step (TESTED)
+  2 k 3
+  4 1 6
+  7 8 5
+Posisi ditemukan pada array
+DFS : 2320
+BFS : 6681
+
+20-step (TESTED)
+  2 1 3
+  4 6 5
+  k 7 8
+Posisi ditemukan pada array
+DFS : 7226
+BFS : 11109 (16 langkah)
+
+25-step
+  2 k 3
+  4 7 1
+  8 5 6
+Posisi ditemukan pada array
+DFS : 
+BFS : 5266 (15 langkah)
+
+**Final State
+  1 2 3
+  4 5 6
+  7 8 k
