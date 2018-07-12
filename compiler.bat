@@ -9,7 +9,7 @@ goto Compiler
   echo Compiled successfully!
   set /p runGame=Run the game? (Y/[N]) : 
   if /I "%runGame%"=="y" (
-    puzzle8uas.exe
+    puzzle8game.exe
     exit /B
   ) else (
     color 1f
