@@ -2,12 +2,12 @@
   *************************************
   *       8-Puzzle game engine        *
   *-----------------------------------*
-  * Version     : 1.2                 *
+  * Version     : 1.3                 *
   * Coder       : David Eleazar       *
   * Prog. Lang  : Pascal              *
   * Compiler    : Free Pascal 3.0.4   *
   * Date Added  : 3rd February, 2018  *
-  * Last Modif. : 5th February, 2018  *
+  * Last Modif. : 12th July, 2018     *
   *************************************
 
   Changelog : 
@@ -16,6 +16,7 @@
         add delay to exit program
   1.2 : change delay mode
         change BFS structure to avoid recursion
+  1.3 : add default final state option
 }
 
 unit PuzzleEngine;
@@ -46,6 +47,7 @@ interface
   procedure initModeSelect (s : String; var state : TMatrix);
 	procedure manualStateInit (var x : TMatrix);
 	procedure randomStateInit (var x : TMatrix);
+  procedure defaultFinalState(var x : TMatrix);
 	procedure viewState(x : TMatrix);
   procedure initFinalHorizontal (x,y : TMatrix);
 	procedure findKPos (x : TMatrix; var a,b : integer);
@@ -68,22 +70,48 @@ implementation
   procedure initModeSelect (s : String; var state : TMatrix); //s : [Initial] atau [Final]
   var
     inpChar : char;
+    enableDefault : Boolean;
   begin
-    repeat
-      if (s='Initial') then TextColor (13) else TextColor (10);
-      clrscr;
-      writeln;
-      writeln ('--> ',s,' state initialization');
-      writeln ('Silakan pilih metode inisialisasi data');
-      writeln (' 1. Manual');
-      writeln (' 2. Random');
-      write ('Masukkan angka pilihan : ');
-      inpChar:=readkey;
-      case inpChar of 
+    if (s='Initial') then begin
+      TextColor (13);
+      enableDefault:=FALSE;
+    end else begin
+      TextColor (10);
+      enableDefault:=TRUE;
+    end;
+    if enableDefault then begin
+      repeat
+        clrscr;
+        writeln;
+        writeln ('--> ',s,' state initialization');
+        writeln ('Silakan pilih metode inisialisasi data');
+        writeln (' 1. Manual');
+        writeln (' 2. Random');
+        WriteLn (' 3. Default');
+        write ('Masukkan angka pilihan : ');
+        inpChar:=readkey;
+        case inpChar of 
         '1' : manualStateInit(state);
         '2' : randomStateInit(state);
-      end;
-    until ((inpChar='1') or (inpChar='2'));
+        '3' : defaultFinalState(state);
+        end;
+      until ((inpChar='1') or (inpChar='2') or (inpChar='3'));
+    end else begin
+      repeat
+        clrscr;
+        writeln;
+        writeln ('--> ',s,' state initialization');
+        writeln ('Silakan pilih metode inisialisasi data');
+        writeln (' 1. Manual');
+        writeln (' 2. Random');
+        write ('Masukkan angka pilihan : ');
+        inpChar:=readkey;
+        case inpChar of 
+        '1' : manualStateInit(state);
+        '2' : randomStateInit(state);
+        end;
+      until ((inpChar='1') or (inpChar='2'));
+    end;
   end;
   {
     prosedur manualStateInit
@@ -107,6 +135,7 @@ implementation
       for j:=0 to 2 do begin
         repeat
         foreignChar :=TRUE;  //karakter tidak ditemukan pada content list
+        foundOnMatrix := FALSE;
           write ('Masukkan isi untuk posisi ',i+1,'-',j+1,' : ');
           readln(tmp);
           //input filter
@@ -165,6 +194,24 @@ implementation
       end;
     end;
 
+  end;
+
+  {
+    prosedur defaultFinalState
+    prosedur ini akan membuat final state default ('1','2','3','4','5','6','7','8','k')
+  }
+  procedure defaultFinalState (var x : TMatrix);
+  var
+    contentList : array [0..8] of char = ('1','2','3','4','5','6','7','8','k');
+    i,j,cListPos : integer;
+  begin
+    cListPos:=0;
+    for i:=0 to 2 do begin
+      for j:=0 to 2 do begin
+        x[i,j]:=contentList[cListPos];
+        inc(cListPos);
+      end;
+    end;
   end;
 
   {
